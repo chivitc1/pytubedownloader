@@ -1,8 +1,9 @@
 import pytube  # library for downloading youtube videos
+import time
 
 import sys
 
-directory = '/home/chinv/Videos/'
+directory = '/home/chinv/Videos/middletonhallenglish/'
 
 
 def main():
@@ -15,17 +16,18 @@ def main():
             print(video.title)
             video.download(directory)
             # printing the links downloaded
-            print("Downloaded: ", link)
+            print("Downloaded: ", link, "ID: ", link.split('=')[-1])
         except:
             print('Some error in downloading: ', link)
             print('retry link: ', link)
+
             try:
                 youtube = pytube.YouTube(link)
                 video = youtube.streams.first()
                 print(video.title)
                 video.download(directory)
                 # printing the links downloaded
-                print("Downloaded: ", link)
+                print("Downloaded: ", link, "ID: ", link.split('=')[-1])
             except:
                 print('retry failed for link: ', link)
 

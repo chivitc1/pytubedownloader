@@ -1,3 +1,5 @@
+from builtins import Exception, ValueError
+
 import pytube
 from pytube import request
 
@@ -10,8 +12,8 @@ from pytube.helpers import uniqueify
 import re
 import json
 
-directory = '/home/chinv/Videos/streamlines/1-departure'
-playlist_url = "https://www.youtube.com/playlist?list=PLq9eALo7bUXtGNOeGNg4TmQeooSUhtod8"
+directory = '/home/chinv/Videos/middletonhallenglish/'
+playlist_url = "https://www.youtube.com/playlist?list=PLbAl6a7KoIkthtl5zuopM-PQctyH2-OqR"
 _js_regex = re.compile(r"window\[\"ytInitialData\"] = ([^\n]+)")
 _video_regex = re.compile(r"href=\"(/watch\?v=[\w-]*)")
 
@@ -20,23 +22,24 @@ def main():
     video_ids = load_video_ids(playlist_url)
     links = [to_video_url(id) for id in video_ids]
     print("Link list:")
-    # with open("list.txt", "w") as file:
-    #     for link in links:
-    #         file.write(link + "\n")
+    with open("list.txt", "w") as file:
+        for link in links:
+            file.write(link + "\n")
 
-    print(links)
-    for link in links:
-        # print(link)
-        # print(video.title)
-        try:
-            youtube = pytube.YouTube(link)
-            video = youtube.streams.first()
-            video.download(directory)
-            # printing the links downloaded
-            print("Downloaded: ", link)
-            # time.sleep(5)
-        except:
-            print('Some error in downloading: ', link)
+    # print(links)
+    # for link in links:
+    #     # print(link)
+    #     # print(video.title)
+    #     # try:
+    #     youtube = pytube.YouTube(link)
+    #     video = youtube.streams.first()
+    #     video.download(directory)
+    #     # printing the links downloaded
+    #     print("Downloaded: ", link)
+    #     time.sleep(5)
+        # except  ValueError as e:
+        #     print('Some error in downloading: ', link)
+        #     print(e)
 
 
 def load_video_ids(playlist_url: str):
